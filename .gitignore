@@ -136,4 +136,4 @@ dist
 *.env
 
 # vs code config
-.vscode/*
+.vscode/
