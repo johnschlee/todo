@@ -134,3 +134,6 @@ dist
 
 *environment.*.ts
 *.env
+
+# vs code config
+.vscode/*
