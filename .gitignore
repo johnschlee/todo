@@ -132,4 +132,5 @@ dist
 
 */.angular/cache/
 
-*process.env
+*environment.*.ts
+*.env

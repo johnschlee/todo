@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule, isDevMode } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -9,14 +9,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
-import { ConfigService } from './shared/config.service';
-
-export const configFactory = (configService: ConfigService) => {
-  return () => configService.loadConfig();
-};
+import { AuthModule } from '@auth0/auth0-angular';
+import { AuthButtonComponent } from './components/auth-button/auth-button.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AuthButtonComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,6 +22,13 @@ export const configFactory = (configService: ConfigService) => {
     MatSidenavModule,
     MatListModule,
     HttpClientModule,
+    AuthModule.forRoot({
+      domain: environment.auth0_domain,
+      clientId: environment.auth0_clientId,
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      }
+    }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
@@ -31,14 +36,7 @@ export const configFactory = (configService: ConfigService) => {
     }),
     StoreModule.forRoot(reducers, { metaReducers }),
   ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: configFactory,
-      deps: [ConfigService],
-      multi: true,
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
