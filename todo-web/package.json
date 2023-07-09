@@ -9,7 +9,7 @@
     "config": "ts-node src/environments/set-env.ts",
     "test": "jest --verbose",
     "test:watch": "jest --watch",
-    "test:ci": "jest --runInBand",
+    "test:ci": "jest --runInBand --coverage",
     "lint": "ng lint"
   },
   "private": true,

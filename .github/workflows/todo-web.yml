@@ -53,3 +53,7 @@ jobs:
         working-directory: todo-web
       - run: npm run test:ci
         working-directory: todo-web
+      - name: Code Coverage Summary
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: todo-web/coverage/coverage-summary.json
