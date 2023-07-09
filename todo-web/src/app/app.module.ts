@@ -11,7 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './components/auth-button/auth-button.component';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, AuthButtonComponent],
@@ -26,8 +26,8 @@ import { environment } from 'src/environments/environment';
       domain: environment.auth0_domain,
       clientId: environment.auth0_clientId,
       authorizationParams: {
-        redirect_uri: window.location.origin
-      }
+        redirect_uri: window.location.origin,
+      },
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

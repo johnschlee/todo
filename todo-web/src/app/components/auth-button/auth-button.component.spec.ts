@@ -1,21 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MockBuilder, MockRender } from 'ng-mocks';
 import { AuthButtonComponent } from './auth-button.component';
+import { AppModule } from '../../app.module';
 
 describe('AuthButtonComponent', () => {
-  let component: AuthButtonComponent;
-  let fixture: ComponentFixture<AuthButtonComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [AuthButtonComponent]
-    });
-    fixture = TestBed.createComponent(AuthButtonComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() => MockBuilder(AuthButtonComponent, [AppModule]));
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(AuthButtonComponent);
+    expect(fixture.point.componentInstance).toBeTruthy();
   });
 });
