@@ -131,3 +131,10 @@ dist
 
 
 */.angular/cache/
+
+*environment.*.ts
+*environment.ts
+*.env
+
+# vs code config
+.vscode/
