@@ -48,6 +48,7 @@ jobs:
         run: npm ci
         working-directory: todo-web
       - run: npm run config
+        working-directory: todo-web
       - run: npm run build
         working-directory: todo-web
       - run: npm run test:ci
