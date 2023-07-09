@@ -4,17 +4,11 @@ import {
   ActionReducerMap,
   createFeatureSelector,
   createSelector,
-  MetaReducer
+  MetaReducer,
 } from '@ngrx/store';
 
+export interface State {}
 
-export interface State {
-
-}
-
-export const reducers: ActionReducerMap<State> = {
-
-};
-
+export const reducers: ActionReducerMap<State> = {};
 
 export const metaReducers: MetaReducer<State>[] = isDevMode() ? [] : [];
