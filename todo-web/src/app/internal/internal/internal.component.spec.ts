@@ -1,21 +1,79 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { InternalComponent } from './internal.component';
+import { MockBuilder, MockRender } from 'ng-mocks';
+import { InternalModule } from '../internal.module';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { Injectable } from '@angular/core';
 
 describe('InternalComponent', () => {
-  let component: InternalComponent;
-  let fixture: ComponentFixture<InternalComponent>;
-
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [InternalComponent]
+    return MockBuilder(InternalComponent, InternalModule).provide({
+      provide: MediaMatcher,
+      useClass: FakeMediaMatcher,
     });
-    fixture = TestBed.createComponent(InternalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = MockRender(InternalComponent);
+    expect(fixture.point.componentInstance).toBeDefined();
   });
 });
+
+// pinched implementations from breakpoints-observer.spec.ts in angular components repo
+export class FakeMediaQueryList {
+  /** The callback for change events. */
+  private _listeners: ((mql: MediaQueryListEvent) => void)[] = [];
+
+  constructor(
+    public matches: boolean,
+    public media: string,
+  ) {}
+
+  /** Toggles the matches state and "emits" a change event. */
+  setMatches(matches: boolean) {
+    this.matches = matches;
+
+    /** Simulate an asynchronous task. */
+    setTimeout(() => {
+      this._listeners.forEach((listener) => listener(this as any));
+    });
+  }
+
+  addEventListener<K extends keyof MediaQueryListEventMap>(
+    type: K,
+    listener: (this: MediaQueryList, ev: MediaQueryListEventMap[K]) => any,
+  ): void {
+    this._listeners.push(listener);
+  }
+}
+
+@Injectable()
+export class FakeMediaMatcher {
+  /** A map of match media queries. */
+  private _queries = new Map<string, FakeMediaQueryList>();
+
+  /** The number of distinct queries created in the media matcher during a test. */
+  get queryCount(): number {
+    return this._queries.size;
+  }
+
+  /** Fakes the match media response to be controlled in tests. */
+  matchMedia(query: string): FakeMediaQueryList {
+    const mql = new FakeMediaQueryList(true, query);
+    this._queries.set(query, mql);
+    return mql;
+  }
+
+  /** Clears all queries from the map of queries. */
+  clear() {
+    this._queries.clear();
+  }
+
+  /** Toggles the matching state of the provided query. */
+  setMatchesQuery(query: string, matches: boolean) {
+    if (this._queries.has(query)) {
+      this._queries.get(query)!.setMatches(matches);
+    } else {
+      throw Error('This query is not being observed.');
+    }
+  }
+}
