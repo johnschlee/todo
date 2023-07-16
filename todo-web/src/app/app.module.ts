@@ -12,9 +12,11 @@ import { reducers, metaReducers } from './reducers';
 import { AuthModule } from '@auth0/auth0-angular';
 import { AuthButtonComponent } from './components/auth-button/auth-button.component';
 import { environment } from '../environments/environment';
+import { LoginComponent } from './login/login.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthButtonComponent],
+  declarations: [AppComponent, AuthButtonComponent, LoginComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

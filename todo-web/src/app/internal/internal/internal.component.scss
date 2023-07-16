@@ -1,0 +1,58 @@
+@use '@angular/material' as mat;
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.nav-spacer {
+  flex: 1 1 auto;
+}
+
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  flex: 1 0 auto;
+}
+
+.active-link {
+  background: rgba(0,0,0,0.2);
+}
+
+// @mixin theme($theme){
+//   $primary: map.get($theme, primary);
+//   $accent: map.get($theme, accent);
+//   $warn: map.get($theme, warn);
+//   $background: map.get($theme, background);
+//   $foreground: map.get($theme, foreground);
+
+
+//   app-internal {
+//     color: mat.get-color-from-palette($primary, default-contrast);
+
+//     .example-container, .docs-navbar-header {
+//       background: mat.get-color-from-palette($primary);
+
+//       & a:hover, & a:focus {
+//         background: rgba(0, 0, 0, 0.4);
+//       }
+
+//       .docs-navbar-header-item-selected {
+//         background: rgba(0, 0, 0, 0.2);
+//       }
+//     }
+//   }
+// }
+
+
