@@ -28,16 +28,6 @@ export class FakeMediaQueryList {
     public media: string,
   ) {}
 
-  /** Toggles the matches state and "emits" a change event. */
-  setMatches(matches: boolean) {
-    this.matches = matches;
-
-    /** Simulate an asynchronous task. */
-    setTimeout(() => {
-      this._listeners.forEach((listener) => listener(this as any));
-    });
-  }
-
   addEventListener<K extends keyof MediaQueryListEventMap>(
     type: K,
     listener: (this: MediaQueryList, ev: MediaQueryListEventMap[K]) => any,
@@ -51,29 +41,10 @@ export class FakeMediaMatcher {
   /** A map of match media queries. */
   private _queries = new Map<string, FakeMediaQueryList>();
 
-  /** The number of distinct queries created in the media matcher during a test. */
-  get queryCount(): number {
-    return this._queries.size;
-  }
-
   /** Fakes the match media response to be controlled in tests. */
   matchMedia(query: string): FakeMediaQueryList {
     const mql = new FakeMediaQueryList(true, query);
     this._queries.set(query, mql);
     return mql;
-  }
-
-  /** Clears all queries from the map of queries. */
-  clear() {
-    this._queries.clear();
-  }
-
-  /** Toggles the matching state of the provided query. */
-  setMatchesQuery(query: string, matches: boolean) {
-    if (this._queries.has(query)) {
-      this._queries.get(query)!.setMatches(matches);
-    } else {
-      throw Error('This query is not being observed.');
-    }
   }
 }
