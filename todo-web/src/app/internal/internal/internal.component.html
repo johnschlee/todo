@@ -1,0 +1,45 @@
+<div class="example-container">
+  <mat-toolbar color="primary">
+    <button
+      mat-icon-button
+      aria-label="Example icon-button with menu icon"
+      (click)="snav.toggle()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>todo</span>
+    <span class="nav-spacer"></span>
+    <button
+      mat-icon-button
+      class="favorite-icon"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Example icon-button with share icon">
+      <mat-icon>share</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav
+      #snav
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+    >
+      <mat-nav-list>
+        <a
+          *ngFor="let item of menuItems"
+          mat-list-item
+          routerLinkActive="docs-navbar-header-item-selected"
+          routerLink="{{ item }}"
+          >{{ item }}</a
+        >
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
